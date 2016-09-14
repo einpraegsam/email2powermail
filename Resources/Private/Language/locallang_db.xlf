@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-05-02T12:00:00Z" product-name="powermail">
+		<header/>
+		<body>
+			<trans-unit id="table.email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="table.email.email">
+				<source>Email address to protect</source>
+			</trans-unit>
+			<trans-unit id="table.email.name">
+				<source>Name of the receiver (optional)</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
