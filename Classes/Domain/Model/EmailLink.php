@@ -15,7 +15,7 @@ class EmailLink
      *
      * @var string
      */
-    protected $email = '';
+    protected $emailAddress = '';
 
     /**
      * Wrapped text - Example: "click here"
@@ -39,18 +39,25 @@ class EmailLink
     protected $href = '';
 
     /**
-     * Name for replacement in frontend
+     * Email object for replacement
      *
-     * @var string
+     * @var Email
      */
-    protected $name = '';
+    protected $email = null;
 
     /**
      * Example: "index.php?id=12&tx_email2powermail[id]=23"
      * 
      * @var string
      */
-    protected $hrefnew = '';
+    protected $hrefNew = '';
+
+    /**
+     * Complete new tag - Example: "<a href="index.php?id=12&tx_email2powermail[id]=3">click me</a>"
+     *
+     * @var string
+     */
+    protected $tagStringNew = '';
 
     /**
      * @var bool
@@ -74,28 +81,27 @@ class EmailLink
     {
         $components = parse_url($href);
         $this->setHref($href);
-        $this->setEmail($components['path']);
+        $this->setEmailAddress($components['path']);
         $this->setText($text);
         $this->setTagString($tagString);
-        $this->setChangeText();
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmailAddress()
     {
-        return $this->email;
+        return $this->emailAddress;
     }
 
     /**
-     * @param string $email
+     * @param string $emailAddress
      * @return EmailLink
      */
-    public function setEmail($email)
+    public function setEmailAddress($emailAddress)
     {
-        $this->email = $email;
+        $this->emailAddress = $emailAddress;
         return $this;
     }
 
@@ -154,38 +160,56 @@ class EmailLink
     }
 
     /**
-     * @return string
+     * @return Email
      */
-    public function getName()
+    public function getEmail()
     {
-        return $this->name;
+        return $this->email;
     }
 
     /**
-     * @param string $name
+     * @param Email $email
      * @return EmailLink
      */
-    public function setName($name)
+    public function setEmail($email)
     {
-        $this->name = $name;
+        $this->email = $email;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getHrefnew()
+    public function getHrefNew()
     {
-        return $this->hrefnew;
+        return $this->hrefNew;
     }
 
     /**
-     * @param string $hrefnew
+     * @param string $hrefNew
      * @return EmailLink
      */
-    public function setHrefnew($hrefnew)
+    public function setHrefNew($hrefNew)
     {
-        $this->hrefnew = $hrefnew;
+        $this->hrefNew = $hrefNew;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTagStringNew()
+    {
+        return $this->tagStringNew;
+    }
+
+    /**
+     * @param string $tagStringNew
+     * @return EmailLink
+     */
+    public function setTagStringNew($tagStringNew)
+    {
+        $this->tagStringNew = $tagStringNew;
         return $this;
     }
 
@@ -220,10 +244,12 @@ class EmailLink
      */
     public function setChangeText()
     {
-        if (ConfigurationUtility::isEnforceChangeTextActivated()) {
-            $this->changeText = true;
-        } else {
-            $this->changeText = GeneralUtility::validEmail($this->getText());
+        if ($this->isChangeLink()) {
+            if (ConfigurationUtility::isEnforceChangeTextActivated()) {
+                $this->changeText = true;
+            } else {
+                $this->changeText = GeneralUtility::validEmail($this->getText());
+            }
         }
         return $this;
     }

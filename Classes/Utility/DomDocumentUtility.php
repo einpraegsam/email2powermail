@@ -25,6 +25,6 @@ class DomDocumentUtility
     public static function outerHTML(\DOMNode $node) {
         $doc = new \DomDocument();
         $doc->appendChild($doc->importNode($node, true));
-        return $doc->saveHTML();
+        return trim($doc->saveHTML());
     }
 }

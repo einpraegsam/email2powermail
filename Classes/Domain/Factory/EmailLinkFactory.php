@@ -4,6 +4,7 @@ namespace In2code\Email2powermail\Domain\Factory;
 use In2code\Email2powermail\Domain\Model\Email;
 use In2code\Email2powermail\Domain\Model\EmailLink;
 use In2code\Email2powermail\Domain\Repository\EmailRepository;
+use In2code\Email2powermail\Utility\ConfigurationUtility;
 use In2code\Email2powermail\Utility\DomDocumentUtility;
 use In2code\Email2powermail\Utility\ObjectUtility;
 use In2code\Email2powermail\Utility\StringUtility;
@@ -26,7 +27,7 @@ class EmailLinkFactory
      * Hold all email addresses/names from the database
      *
      *  [
-     *      "mail@mail.org" => "name"
+     *      "mail@mail.org" => EmailObject
      *  ]
      *
      * @var array
@@ -52,7 +53,7 @@ class EmailLinkFactory
         $emailRepository = ObjectUtility::getObjectManager()->get(EmailRepository::class);
         /** @var Email $email */
         foreach ($emailRepository->findAll() as $email) {
-            $this->emailAddressesDatabase[$email->getEmail()] = $email->getName();
+            $this->emailAddressesDatabase[$email->getEmail()] = $email;
         }
     }
 
@@ -66,7 +67,7 @@ class EmailLinkFactory
         foreach ($domDocument->getElementsByTagName('a') as $aElement) {
             /** @var \DomElement $aElement */
             if ($aElement->hasAttribute('href')) {
-                $href = trim($aElement->getAttribute('href'));
+                $href = $aElement->getAttribute('href');
                 if (StringUtility::isMailLink($href)) {
                     $this->addEmailAddressLink($href, $aElement->textContent, DomDocumentUtility::outerHTML($aElement));
                 }
@@ -83,12 +84,53 @@ class EmailLinkFactory
     protected function addEmailAddressLink($href, $text, $tagString)
     {
         $emailLink = ObjectUtility::getObjectManager()->get(EmailLink::class, $href, $text, $tagString);
-        if (array_key_exists($emailLink->getEmail(), $this->emailAddressesDatabase)) {
-            $emailLink->setName($this->emailAddressesDatabase[$emailLink->getEmail()]);
+        if (array_key_exists($emailLink->getEmailAddress(), $this->emailAddressesDatabase)) {
+            $email = $this->emailAddressesDatabase[$emailLink->getEmailAddress()];
+            $emailLink->setEmail($email);
             $emailLink->setChangeLink(true);
-            $emailLink->setHrefnew('index.php?id=123');
+            $emailLink->setChangeText();
+            $emailLink->setHrefNew($this->getPowermailLink($email));
+            $emailLink->setTagStringNew($this->getTagStringNew($emailLink));
         }
         $this->emailAddresses[] = $emailLink;
+    }
+
+    /**
+     * @param Email $email
+     * @return string
+     */
+    protected function getPowermailLink(Email $email)
+    {
+        $contentObject = ObjectUtility::getContentObject();
+        $configuration = [
+            'parameter' => ConfigurationUtility::getPowermailPid(),
+            'additionalParams' => '&tx_email2powermail[id]=' . $email->getIdentifier()
+        ];
+        return $contentObject->typoLink_URL($configuration);
+    }
+
+    /**
+     * @param EmailLink $emailLink
+     * @return string
+     */
+    protected function getTagStringNew(EmailLink $emailLink)
+    {
+        $tagStringNew = $emailLink->getTagString();
+        if ($emailLink->isChangeLink()) {
+            $tagStringNew = str_replace(
+                'href="' . $emailLink->getHref() . '"',
+                'href="' . $emailLink->getHrefNew() . '"',
+                $tagStringNew
+            );
+        }
+        if ($emailLink->isChangeText()) {
+            $tagStringNew = preg_replace(
+                '~(<a.*>)(.*)(<\/a>)~iU',
+                '$1' . $emailLink->getEmail()->getName() . '$3',
+                $tagStringNew
+            );
+        }
+        return $tagStringNew;
     }
 
     /**

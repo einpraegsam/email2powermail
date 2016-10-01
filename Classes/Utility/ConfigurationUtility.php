@@ -21,6 +21,19 @@ class ConfigurationUtility
     }
 
     /**
+     * @return int
+     */
+    public static function getPowermailPid()
+    {
+        $configuration = self::getExtensionConfiguration();
+        if (!empty($configuration['powermailPid'])) {
+            $contentObject = ObjectUtility::getContentObject();
+            return $contentObject->cObjGetSingle($configuration['powermailPid'], $configuration['powermailPid.']);
+        }
+        return 1;
+    }
+
+    /**
      * @return bool
      */
     public static function isEnforceChangeTextActivated()

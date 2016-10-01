@@ -4,6 +4,10 @@ plugin.tx_email2powermail {
 		_enable = TEXT
 		_enable.value = 1
 
+		# Page where the powermail form is stored
+		powermailPid = TEXT
+		powermailPid.value = 240
+
 		# Replace link text also if it's not an email
 		enforceChangeText = 0
 	}
@@ -26,7 +30,8 @@ config.tx_extbase {
 				mapping {
 					tableName = fe_users
 					columns {
-						email.mapOnProperty  = email
+						uid.mapOnProperty = identifier
+						email.mapOnProperty = email
 						first_name.mapOnProperty = name
 					}
 					in {

@@ -36,6 +36,13 @@ class Email extends AbstractEntity
     const TABLE_NAME = 'tx_email2powermail_domain_model_email';
 
     /**
+     * Identifier is of type string because it could also contain a hash (depends on TypoScript mapping)
+     *
+     * @var string
+     */
+    protected $identifier = '';
+
+    /**
      * @var string
      * @validate NotEmpty
      */
@@ -45,6 +52,24 @@ class Email extends AbstractEntity
      * @var string
      */
     protected $name = '';
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * @param string $identifier
+     * @return Email
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+        return $this;
+    }
 
     /**
      * @return string
