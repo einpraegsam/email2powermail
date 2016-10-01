@@ -1,0 +1,40 @@
+plugin.tx_email2powermail {
+	settings {
+		# Turn extension on/off
+		_enable = TEXT
+		_enable.value = 1
+
+		# Replace link text also if it's not an email
+		enforceChangeText = 0
+	}
+}
+
+config.tx_extbase {
+	persistence {
+		classes {
+			In2code\Email2powermail\Domain\Model\Email {
+				mapping {
+					tableName = tx_email2powermail_domain_model_email
+					columns {
+						email.mapOnProperty  = email
+						name.mapOnProperty = name
+					}
+				}
+
+				# Example how to map to fe_users in one pid
+				#/*
+				mapping {
+					tableName = fe_users
+					columns {
+						email.mapOnProperty  = email
+						first_name.mapOnProperty = name
+					}
+					in {
+						pid = 1,237
+					}
+				}
+				#*/
+			}
+		}
+	}
+}

@@ -1,7 +1,8 @@
 <?php
 namespace In2code\Email2powermail\Domain\Model;
 
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use In2code\Email2powermail\Domain\Service\Replace;
+use In2code\Email2powermail\Utility\ObjectUtility;
 
 /**
  * Class ContentPostProc
@@ -10,9 +11,10 @@ class ContentPostProc {
 
     /**
      * @param array $params
-     * @param TypoScriptFrontendController $tsfe
+     * @return void
      */
-    public function manipulateOutput(array &$params, TypoScriptFrontendController $tsfe) {
-        $params['pObj']->content = 'xxx';
+    public function manipulateOutput(array &$params) {
+        $replaceService = ObjectUtility::getObjectManager()->get(Replace::class);
+        $params['pObj']->content = $replaceService->replaceInContent($params['pObj']->content);
     }
 }
