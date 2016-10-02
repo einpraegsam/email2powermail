@@ -36,7 +36,7 @@ lib.email2powermail {
 		introductionText = COA
 		introductionText {
 			10 = TEXT
-			10.value = Send email to
+			10.data = LLL:EXT:email2powermail/Resources/Private/Language/locallang.xlf:sendto
 			10.noTrimWrap = || |
 
 			20 < lib.email2powermail.decode.name
