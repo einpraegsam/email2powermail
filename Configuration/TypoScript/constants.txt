@@ -1,0 +1,6 @@
+plugin.tx_email2powermail {
+	settings {
+		# cat=email2powermail//0000; type=int+; label= Powermail PID: Page where the powermail form is stored
+		pid = 240
+	}
+}

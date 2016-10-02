@@ -45,7 +45,7 @@ class ConfigurationUtility
     /**
      * @return array
      */
-    protected static function getExtensionConfiguration()
+    public static function getExtensionConfiguration()
     {
         $configuration = [];
         $tsfe = ObjectUtility::getTyposcriptFrontendController();

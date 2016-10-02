@@ -3,6 +3,7 @@ namespace In2code\Email2powermail\Domain\Model;
 
 use In2code\Email2powermail\Utility\ConfigurationUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
  * Class EmailLink
@@ -252,5 +253,13 @@ class EmailLink
             }
         }
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return ObjectAccess::getGettableProperties($this);
     }
 }

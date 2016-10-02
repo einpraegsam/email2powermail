@@ -2,6 +2,7 @@
 namespace In2code\Email2powermail\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /***************************************************************
  *  Copyright notice
@@ -105,5 +106,13 @@ class Email extends AbstractEntity
     {
         $this->name = $name;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return ObjectAccess::getGettableProperties($this);
     }
 }

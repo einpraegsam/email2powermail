@@ -115,21 +115,10 @@ class EmailLinkFactory
      */
     protected function getTagStringNew(EmailLink $emailLink)
     {
-        $tagStringNew = $emailLink->getTagString();
-        if ($emailLink->isChangeLink()) {
-            $tagStringNew = str_replace(
-                'href="' . $emailLink->getHref() . '"',
-                'href="' . $emailLink->getHrefNew() . '"',
-                $tagStringNew
-            );
-        }
-        if ($emailLink->isChangeText()) {
-            $tagStringNew = preg_replace(
-                '~(<a.*>)(.*)(<\/a>)~iU',
-                '$1' . $emailLink->getEmail()->getName() . '$3',
-                $tagStringNew
-            );
-        }
+        $contentObject = ObjectUtility::getContentObject();
+        $contentObject->start($emailLink->getEmail()->toArray() + $emailLink->toArray());
+        $configuration = ConfigurationUtility::getExtensionConfiguration();
+        $tagStringNew = $contentObject->cObjGetSingle($configuration['parseLink'], $configuration['parseLink.']);
         return $tagStringNew;
     }
 
