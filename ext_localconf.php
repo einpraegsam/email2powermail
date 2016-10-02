@@ -28,4 +28,13 @@ call_user_func(function () {
         'getReceiverName',
         false
     );
+
+    // Add own markers
+    $signalSlotDispatcher->connect(
+        \In2code\Powermail\Domain\Repository\MailRepository::class,
+        'getVariablesWithMarkersFromMail',
+        \In2code\Email2powermail\Slots\MarkerSlot::class,
+        'getVariablesWithMarkersFromMail',
+        false
+    );
 });
