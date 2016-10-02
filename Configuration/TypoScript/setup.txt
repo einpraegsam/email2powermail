@@ -78,3 +78,8 @@ config.tx_extbase {
 		}
 	}
 }
+
+/**
+ * Powermail settings
+ */
+plugin.tx_powermail.settings.setup.misc.addQueryString = 1

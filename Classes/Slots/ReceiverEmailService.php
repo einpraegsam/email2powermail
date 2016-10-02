@@ -1,17 +1,17 @@
 <?php
-namespace In2code\Email2powermail\UserFuncs;
+namespace In2code\Email2powermail\Slots;
 
 use In2code\Email2powermail\Domain\Model\Email;
 use In2code\Email2powermail\Domain\Repository\EmailRepository;
+use In2code\Email2powermail\Utility\ConfigurationUtility;
 use In2code\Email2powermail\Utility\FrontendUtility;
 use In2code\Email2powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
- * Class Decode could be included via TypoScript to decode email or name from given identifier
+ * Class ReceiverEmailService
  */
-class Decode implements SingletonInterface
-{
+class ReceiverEmailService implements SingletonInterface {
 
     /**
      * @var null|Email
@@ -30,24 +30,25 @@ class Decode implements SingletonInterface
     }
 
     /**
-     * @return string
+     * Manipulate receiver email address
+     *
+     * @param array $emailArray
+     * @return void
      */
-    public function getName()
-    {
-        if ($this->email !== null) {
-            return $this->email->getName();
+    public function setReceiverEmails(array &$emailArray) {
+        if (ConfigurationUtility::isExtensionTurnedOn()) {
+            $emailArray[0] = $this->email->getEmail();
         }
-        return 'Error, no name found!';
     }
 
     /**
-     * @return string
+     * Manipulate receiver name
+     *
+     * @param string $receiverName
+     * @return void
      */
-    public function getEmailAddress()
+    public function getReceiverName(&$receiverName)
     {
-        if ($this->email !== null) {
-            return $this->email->getEmail();
-        }
-        return 'Error, no email found!';
+        $receiverName = $this->email->getName();
     }
 }

@@ -1,13 +1,31 @@
 <?php
 
 call_user_func(function () {
-
-    #####################################
-    ## Hook for HTML manipulation #######
-    #####################################
-    
     # Hooks for TYPO3 FE manipulation
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] =
         'EXT:email2powermail/Classes/Hooks/ContentPostProc.php:' .
-        '&In2code\\Email2powermail\\Domain\\Model\\ContentPostProc->manipulateOutput';
+        '&In2code\\Email2powermail\\Hooks\\ContentPostProc->manipulateOutput';
+    
+    # Use signals
+    $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+        \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
+    );
+
+    // Manipulate email before sending example
+    $signalSlotDispatcher->connect(
+        \In2code\Powermail\Domain\Service\ReceiverEmailService::class,
+        'setReceiverEmails',
+        \In2code\Email2powermail\Slots\ReceiverEmailService::class,
+        'setReceiverEmails',
+        false
+    );
+
+    // Manipulate name before sending example
+    $signalSlotDispatcher->connect(
+        \In2code\Powermail\Domain\Service\ReceiverEmailService::class,
+        'getReceiverName',
+        \In2code\Email2powermail\Slots\ReceiverEmailService::class,
+        'getReceiverName',
+        false
+    );
 });

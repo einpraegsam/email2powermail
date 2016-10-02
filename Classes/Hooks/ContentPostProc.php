@@ -1,5 +1,5 @@
 <?php
-namespace In2code\Email2powermail\Domain\Model;
+namespace In2code\Email2powermail\Hooks;
 
 use In2code\Email2powermail\Domain\Service\Replace;
 use In2code\Email2powermail\Utility\ObjectUtility;
