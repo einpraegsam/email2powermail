@@ -1,6 +1,7 @@
 <?php
 namespace In2code\Email2powermail\Domain\Repository;
 
+use In2code\Email2powermail\Domain\Model\Email;
 use In2code\Email2powermail\Utility\MappingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -29,6 +30,18 @@ class EmailRepository extends Repository
         $query->getQuerySettings()->setRespectStoragePage(false);
         $this->addConstraints($query);
         return $query->execute();
+    }
+
+    /**
+     * @param string $identifier
+     * @return Email
+     */
+    public function findByIdentifier($identifier)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->matching($query->equals('identifier', $identifier));
+        return $query->execute()->getFirst();
     }
 
     /**

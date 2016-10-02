@@ -1,3 +1,6 @@
+/**
+ * General extension settings
+ */
 plugin.tx_email2powermail {
 	settings {
 		# Turn extension on/off
@@ -19,6 +22,31 @@ plugin.tx_email2powermail {
 	}
 }
 
+/**
+ * Library to include in powermail or direct via TypoScript for Decoding
+ */
+lib.email2powermail {
+	decode {
+		name = USER
+		name.userFunc = In2code\Email2powermail\UserFuncs\Decode->getName
+
+		email = USER
+		email.userFunc = In2code\Email2powermail\UserFuncs\Decode->getEmailAddress
+
+		introductionText = COA
+		introductionText {
+			10 = TEXT
+			10.value = Send email to
+			10.noTrimWrap = || |
+
+			20 < lib.email2powermail.decode.name
+		}
+	}
+}
+
+/**
+ * Extension database mapping
+ */
 config.tx_extbase {
 	persistence {
 		classes {
@@ -26,13 +54,14 @@ config.tx_extbase {
 				mapping {
 					tableName = tx_email2powermail_domain_model_email
 					columns {
+						uid.mapOnProperty = identifier
 						email.mapOnProperty  = email
 						name.mapOnProperty = name
 					}
 				}
 
-				# Example how to map to fe_users in one pid
-				#/*
+				# Example how to use fe_users instead of tx_email2powermail_domain_model_email
+				/*
 				mapping {
 					tableName = fe_users
 					columns {
@@ -44,7 +73,7 @@ config.tx_extbase {
 						pid = 1,237
 					}
 				}
-				#*/
+				*/
 			}
 		}
 	}
