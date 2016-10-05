@@ -23,7 +23,7 @@ class ReceiverEmailService implements SingletonInterface {
      */
     public function __construct()
     {
-        if ($this->email === null) {
+        if ($this->email === null && ConfigurationUtility::isExtensionTurnedOn()) {
             $emailRepository = ObjectUtility::getObjectManager()->get(EmailRepository::class);
             $this->email = $emailRepository->findByIdentifier(FrontendUtility::getIdentifier());
         }
@@ -49,6 +49,8 @@ class ReceiverEmailService implements SingletonInterface {
      */
     public function getReceiverName(&$receiverName)
     {
-        $receiverName = $this->email->getName();
+        if (ConfigurationUtility::isExtensionTurnedOn()) {
+            $receiverName = $this->email->getName();
+        }
     }
 }
