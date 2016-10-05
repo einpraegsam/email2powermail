@@ -41,6 +41,13 @@ Example if form was sent:
 * TYPO3 7.6 or higher
 * PHP 5.5 or higher
 
+## Changelog
+
+| Version    | Date       | Description                                          |
+| ---------- |:----------:| ----------------------------------------------------:|
+| 1.0.1      | 2016-10-05 | Prevent function if extension is turned off          |
+| 1.0.0      | 2016-10-03 | Complete refactored version of email2powermail       |
+
 ## Best practice
 
 ### 1) Add a label field to the form
