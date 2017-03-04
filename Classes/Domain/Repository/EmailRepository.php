@@ -41,7 +41,9 @@ class EmailRepository extends Repository
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);
         $query->matching($query->equals('identifier', $identifier));
-        return $query->execute()->getFirst();
+        $email = $query->execute()->getFirst();
+        /** @var Email $email */
+        return $email;
     }
 
     /**

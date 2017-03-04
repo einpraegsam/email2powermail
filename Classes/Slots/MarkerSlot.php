@@ -15,10 +15,10 @@ class MarkerSlot
 
     /**
      * Add own markers
-     *
+     * @param array $variables
      * @return void
      */
-    public function getVariablesWithMarkersFromMail(&$variables)
+    public function getVariablesWithMarkersFromMail(array &$variables)
     {
         if (ConfigurationUtility::isExtensionTurnedOn()) {
             $emailRepository = ObjectUtility::getObjectManager()->get(EmailRepository::class);
