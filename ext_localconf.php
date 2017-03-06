@@ -2,7 +2,7 @@
 
 call_user_func(function () {
     # Hooks for TYPO3 FE manipulation
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] =
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] =
         'EXT:email2powermail/Classes/Hooks/ContentPostProc.php:' .
         '&In2code\\Email2powermail\\Hooks\\ContentPostProc->manipulateOutput';
     
