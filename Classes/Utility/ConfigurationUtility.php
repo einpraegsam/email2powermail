@@ -54,4 +54,18 @@ class ConfigurationUtility
         }
         return $configuration;
     }
+
+
+    /**
+     * @return bool
+     */
+    public static function isLazyModeTurnedOn()
+    {
+        $configuration = self::getExtensionConfiguration();
+        if (!empty($configuration['_enableLazyMode'])) {
+            $contentObject = ObjectUtility::getContentObject();
+            return (bool)$contentObject->cObjGetSingle($configuration['_enableLazyMode'], $configuration['_enableLazyMode.']);
+        }
+        return false;
+    }
 }

@@ -32,7 +32,7 @@ Example if form was sent:
 * Take care that static templates (powermail and email2powermail are included) - Important: powermail must be included before email2powermail!
 * Add a powermail form to a page and remember the PID (e.g. 123)
 * Add this pid to constants: plugin.tx_email2powermail.settings.pid=123
-* Add some email-records to a sysfolder (all this emails will be encoded in frontend)
+* Add some email-records to a sysfolder (all this emails will be encoded in frontend) or enable lazy mode to encode all email links
 * Have fun!
 
 ## Dependencies
@@ -45,6 +45,7 @@ Example if form was sent:
 
 | Version    | Date       | Description                                          |
 | ---------- |:----------:| ----------------------------------------------------:|
+| 1.0.2      | 2017-03-03 | Add lazy mode                                        |
 | 1.0.1      | 2016-10-05 | Prevent function if extension is turned off          |
 | 1.0.0      | 2016-10-03 | Complete refactored version of email2powermail       |
 

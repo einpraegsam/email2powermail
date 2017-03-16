@@ -8,6 +8,7 @@ use In2code\Email2powermail\Utility\ConfigurationUtility;
 use In2code\Email2powermail\Utility\DomDocumentUtility;
 use In2code\Email2powermail\Utility\ObjectUtility;
 use In2code\Email2powermail\Utility\StringUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
  * Class EmailLinkFactory returns array with a bundle of EmailLink objects that keep all email-address-links of a
@@ -84,6 +85,19 @@ class EmailLinkFactory
     protected function addEmailAddressLink($href, $text, $tagString)
     {
         $emailLink = ObjectUtility::getObjectManager()->get(EmailLink::class, $href, $text, $tagString);
+        if (ConfigurationUtility::isLazyModeTurnedOn() === TRUE) {
+            if (!array_key_exists($emailLink->getEmailAddress(), $this->emailAddressesDatabase)) {
+                $newEmail = new Email();
+                $newEmail->setEmail($emailLink->getEmailAddress());
+                $emailRepository = ObjectUtility::getObjectManager()->get(EmailRepository::class);
+                $emailRepository->add($newEmail);
+                $persistenceManager = ObjectUtility::getObjectManager()->get(PersistenceManager::class);
+                $persistenceManager->persistAll();
+                $identifier = $persistenceManager->getIdentifierByObject($newEmail);
+                $newEmail->setIdentifier($identifier);
+                $this->emailAddressesDatabase[$emailLink->getEmailAddress()] = $newEmail;
+            }
+        }
         if (array_key_exists($emailLink->getEmailAddress(), $this->emailAddressesDatabase)) {
             $email = $this->emailAddressesDatabase[$emailLink->getEmailAddress()];
             $emailLink->setEmail($email);

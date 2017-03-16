@@ -6,6 +6,9 @@ plugin.tx_email2powermail {
 		# Turn extension on/off
 		_enable = TEXT
 		_enable.value = 1
+		# Turn lazyMode on/off
+		_enableLazyMode = TEXT
+		_enableLazyMode.value = 0
 
 		# Build link to powermail form
 		parseLink = TEXT
