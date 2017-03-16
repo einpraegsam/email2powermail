@@ -54,4 +54,10 @@ class ConfigurationUtility
         }
         return $configuration;
     }
+
+    public static function isInSimpleMode() {
+        $configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['email2powermail']);
+
+        return (bool)$configuration['enableSimpleMode'];
+    }
 }
