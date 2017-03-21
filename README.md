@@ -45,6 +45,7 @@ Example if form was sent:
 
 | Version    | Date       | Description                                          |
 | ---------- |:----------:| ----------------------------------------------------:|
+| 1.1.0      | 2017-03-17 | Add simple mode to convert all email addresses       |
 | 1.0.1      | 2016-10-05 | Prevent function if extension is turned off          |
 | 1.0.0      | 2016-10-03 | Complete refactored version of email2powermail       |
 
