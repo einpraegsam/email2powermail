@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = [
     'description' => 'Convert Email-Addresses in TYPO3 Frontend to links to a powermail form. The form will be send to this email.',
     'category' => 'plugin',
     'shy' => 0,
-    'version' => '1.1.1',
+    'version' => '2.0.0',
     'dependencies' => 'cms,extbase,fluid',
     'conflicts' => '',
     'priority' => '',
@@ -36,7 +36,7 @@ $EM_CONF[$_EXTKEY] = [
         'depends' => [
             'typo3' => '7.6.1-8.99.99',
             'php' => '5.5.0-7.99.99',
-            'powermail' => '3.0.0-4.99.99'
+            'powermail' => '4.0.0-4.99.99'
         ],
         'conflicts' => [],
         'suggests' => [],

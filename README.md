@@ -45,6 +45,7 @@ Example if form was sent:
 
 | Version    | Date       | Description                                          |
 | ---------- |:----------:| ----------------------------------------------------:|
+| 2.0.0      | 2017-10-29 | Update for powermail 4.x                             |
 | 1.1.1      | 2017-05-20 | TCA update for TYPO3 8.7                             |
 | 1.1.0      | 2017-03-17 | Add simple mode to convert all email addresses       |
 | 1.0.1      | 2016-10-05 | Prevent function if extension is turned off          |

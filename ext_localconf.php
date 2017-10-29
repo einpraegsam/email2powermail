@@ -16,7 +16,7 @@ call_user_func(function () {
 
     // Manipulate email before sending example
     $signalSlotDispatcher->connect(
-        \In2code\Powermail\Domain\Service\ReceiverEmailService::class,
+        \In2code\Powermail\Domain\Service\Mail\ReceiverMailReceiverPropertiesService::class,
         'setReceiverEmails',
         \In2code\Email2powermail\Slots\ReceiverEmailService::class,
         'setReceiverEmails',
@@ -25,7 +25,7 @@ call_user_func(function () {
 
     // Manipulate name before sending example
     $signalSlotDispatcher->connect(
-        \In2code\Powermail\Domain\Service\ReceiverEmailService::class,
+        \In2code\Powermail\Domain\Service\Mail\ReceiverMailReceiverPropertiesService::class,
         'getReceiverName',
         \In2code\Email2powermail\Slots\ReceiverEmailService::class,
         'getReceiverName',
