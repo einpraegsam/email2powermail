@@ -27,7 +27,7 @@ Example if form was sent:
 
 ## Installation
 
-* Install powermail 3.8.0 (or minimum 3.0.0) first
+* Install powermail 4.0.0 or newer first
 * Install this extension
 * Take care that static templates (powermail and email2powermail are included) - Important: powermail must be included before email2powermail!
 * Add a powermail form to a page and remember the PID (e.g. 123)
@@ -37,9 +37,9 @@ Example if form was sent:
 
 ## Dependencies
 
-* Powermail 3.0.0 or higher (best work with 3.8 or higher)
-* TYPO3 7.6 or higher
-* PHP 5.5 or higher
+* Powermail 4.0.0 or newer
+* TYPO3 7.6 or newer
+* PHP 5.5 or newer
 
 ## Changelog
 
